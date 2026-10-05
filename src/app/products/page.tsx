@@ -31,8 +31,7 @@ export default async function ProductsPage() {
         <section className="surface-light py-20 md:py-28">
           <div className="shell max-w-xl">
             <p className="text-lg leading-8 text-[#625e57]">
-              Add <span className="text-ink">SHOPIFY_STORE_DOMAIN</span> and{" "}
-              <span className="text-ink">SHOPIFY_STOREFRONT_ACCESS_TOKEN</span> to{" "}
+              Add <span className="text-ink">SHOPIFY_STORE_DOMAIN</span> to{" "}
               <span className="text-ink">.env.local</span>, then restart the site. Published Shopify
               products will appear here.
             </p>

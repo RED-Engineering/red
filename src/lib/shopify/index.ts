@@ -12,11 +12,23 @@ export type ShopifyCart = {
 
 const API_VERSION = "2025-01";
 
-export function isShopifyConfigured() {
-  return Boolean(
-    process.env.SHOPIFY_STORE_DOMAIN &&
-      process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN,
+function shopDomain() {
+  return (
+    process.env.SHOPIFY_STORE_DOMAIN?.replace(/^https?:\/\//, "").replace(/\/$/, "") ??
+    ""
   );
+}
+
+function hasStorefrontToken() {
+  return Boolean(process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN);
+}
+
+export function isShopifyConfigured() {
+  return Boolean(shopDomain());
+}
+
+function variantNumericId(id: string) {
+  return id.match(/(\d+)$/)?.[1] ?? id;
 }
 
 async function storefrontFetch<T>(
@@ -24,7 +36,7 @@ async function storefrontFetch<T>(
   variables?: Record<string, unknown>,
   options?: { revalidate?: number; cache?: RequestCache },
 ): Promise<T> {
-  const domain = process.env.SHOPIFY_STORE_DOMAIN;
+  const domain = shopDomain();
   const token = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
   if (!domain || !token) {
     throw new Error("Shopify Storefront API is not configured.");
@@ -243,13 +255,113 @@ export function mapShopifyProduct(node: ShopifyProductNode): RedProduct {
   };
 }
 
+type PublicShopifyProduct = {
+  id: number;
+  handle: string;
+  title: string;
+  body_html: string | null;
+  product_type: string;
+  tags: string | string[];
+  images: { src: string; alt?: string | null; width?: number; height?: number }[];
+  variants: {
+    id: number;
+    title: string;
+    price: string;
+    available: boolean;
+    sku: string | null;
+  }[];
+};
+
+function stripHtml(value: string) {
+  return value.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+async function fetchPublicShopifyProducts(): Promise<RedProduct[]> {
+  const domain = shopDomain();
+  if (!domain) return [];
+
+  const [catalogRes, metaRes] = await Promise.all([
+    fetch(`https://${domain}/products.json`, { next: { revalidate: 60 } }),
+    fetch(`https://${domain}/meta.json`, { next: { revalidate: 3600 } }),
+  ]);
+
+  if (!catalogRes.ok) {
+    throw new Error(`Shopify catalog failed (${catalogRes.status}).`);
+  }
+
+  const catalog = (await catalogRes.json()) as { products: PublicShopifyProduct[] };
+  const meta = metaRes.ok
+    ? ((await metaRes.json()) as { currency?: string })
+    : {};
+  const currencyCode = meta.currency || "EUR";
+
+  return catalog.products.map((product) => {
+    const description = stripHtml(product.body_html ?? "");
+    const tags = Array.isArray(product.tags)
+      ? product.tags
+      : product.tags.split(",").map((tag) => tag.trim()).filter(Boolean);
+    const images = product.images
+      .map((image) =>
+        image.src
+          ? {
+              url: image.src,
+              alt: image.alt ?? product.title,
+              width: image.width ?? 1600,
+              height: image.height ?? 1200,
+            }
+          : undefined,
+      )
+      .filter((image): image is NonNullable<typeof image> => Boolean(image));
+    const sku = product.variants.find((variant) => variant.sku)?.sku;
+
+    return {
+      handle: product.handle,
+      productCode: sku || product.handle.toUpperCase(),
+      title: product.title,
+      short: description ? `${description.split(".")[0]}.` : product.title,
+      description,
+      included: tags.filter((tag) =>
+        ["STEP", "STL", "DXF", "PDF", "PDF DRAWING"].includes(tag.toUpperCase()),
+      ),
+      processNotes: "",
+      revision: "",
+      revisionUpdated: "",
+      year: "",
+      material: "",
+      process: "",
+      dimensions: "",
+      weight: "",
+      category: "OBJECT",
+      type: "PHYSICAL" as const,
+      available: product.variants.some((variant) => variant.available),
+      image: images[0],
+      images,
+      currencyCode,
+      shopifyProductId: `gid://shopify/Product/${product.id}`,
+      relatedProductHandles: [],
+      options: product.variants.map((variant) => ({
+        label: variant.title === "Default Title" ? "STANDARD" : variant.title.toUpperCase(),
+        price: Number.parseFloat(variant.price),
+        fulfillment: variant.title.toLowerCase().includes("digital")
+          ? ("DIGITAL" as const)
+          : ("PHYSICAL" as const),
+        available: variant.available,
+        shopifyVariantId: `gid://shopify/ProductVariant/${variant.id}`,
+      })),
+    };
+  });
+}
+
 export async function fetchShopifyProducts(): Promise<RedProduct[]> {
-  const data = await storefrontFetch<{ products: { nodes: ShopifyProductNode[] } }>(
-    PRODUCTS_QUERY,
-    undefined,
-    { revalidate: 60 },
-  );
-  return data.products.nodes.map(mapShopifyProduct);
+  if (hasStorefrontToken()) {
+    const data = await storefrontFetch<{ products: { nodes: ShopifyProductNode[] } }>(
+      PRODUCTS_QUERY,
+      undefined,
+      { revalidate: 60 },
+    );
+    return data.products.nodes.map(mapShopifyProduct);
+  }
+  return fetchPublicShopifyProducts();
 }
 
 export async function fetchShopifyProduct(handle: string) {
@@ -257,9 +369,27 @@ export async function fetchShopifyProduct(handle: string) {
   return products.find((p) => p.handle === handle) ?? null;
 }
 
+function permalinkCheckout(lines: ShopifyCartLineInput[]): ShopifyCart {
+  const domain = shopDomain();
+  if (!domain || !lines.length) {
+    throw new Error("Shopify is not configured.");
+  }
+  const cart = lines
+    .map((line) => `${variantNumericId(line.merchandiseId)}:${line.quantity}`)
+    .join(",");
+  return {
+    id: "permalink",
+    checkoutUrl: `https://${domain}/cart/${cart}`,
+  };
+}
+
 export async function createShopifyCheckout(
   lines: ShopifyCartLineInput[],
 ): Promise<ShopifyCart> {
+  if (!hasStorefrontToken()) {
+    return permalinkCheckout(lines);
+  }
+
   const data = await storefrontFetch<{
     cartCreate: {
       cart: ShopifyCart | null;
