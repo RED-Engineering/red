@@ -33,6 +33,7 @@
   --font-sans: var(--font-barlow);
   --font-display: var(--font-barlow-condensed);
   --font-mono: var(--font-ibm-plex-mono);
+  --font-mark: var(--font-oswald);
   --animate-inspect: inspect 11s var(--ease-physical) infinite alternate;
 }
 

@@ -22,7 +22,7 @@ export function Footer() {
         <div className="md:col-span-5">
           <div className="flex items-center gap-5">
             <BrandMark className="h-20 w-20" />
-            <p className="font-display text-7xl font-black tracking-[-0.04em] text-red">RED</p>
+            <p className="h-20 font-mark text-[80px] font-bold leading-none tracking-[-0.02em] text-red">RED</p>
           </div>
           <p className="mt-8 max-w-sm text-sm leading-6 text-mist">
             RED — engineering, design and manufacturing.
