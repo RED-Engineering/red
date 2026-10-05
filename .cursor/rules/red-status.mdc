@@ -1,0 +1,31 @@
+---
+description: Current RED website status, live URLs, and unfinished work. Read before changing the project.
+alwaysApply: true
+---
+
+# RED session status
+
+Full handoff: `STATUS.md` at the repo root. Follow it.
+
+## Live
+
+- Site: https://red-umber.vercel.app
+- Shop: https://red-umber.vercel.app/products (Shopify product **Suport scule Abkant**)
+- GitHub: https://github.com/RED-Engineering/red (`master`)
+- Vercel: `red-133a/red`
+- Shopify store: `xa7k6h-dc.myshopify.com`
+- Local: `C:\Users\RED\Projects\red`
+
+## Done
+
+Custom Next.js site for **RED** (not “by David”). Shopify is catalog/checkout only. GitHub + Vercel production are live. Shop uses store domain + public catalog + cart permalinks until a Storefront token exists.
+
+## Do next
+
+1. Link GitHub on Vercel Authentication so `master` auto-deploys.
+2. Install the Shopify app and add `SHOPIFY_STOREFRONT_ACCESS_TOKEN` (not the `shpss_` client secret). App is **not installed**; OAuth client ID/secret cannot be used as the Storefront token. Rotate the secret if it was pasted in chat.
+3. Add real work photos in `public/work/{slug}/` + `src/content/projects.ts`.
+4. Wire `/api/contact` to email; fill `site.email` / social in `src/lib/site.ts`.
+5. Custom domain still unset.
+
+Never commit `.env.local` or Shopify secrets. Never put CAD files in `public/`.

@@ -1,0 +1,16 @@
+---
+description: Brand, Shopify, and content rules for the RED website.
+alwaysApply: true
+---
+
+# RED conventions
+
+- Brand name is **RED**. Do not add “by David”.
+- Accent `#FF3131`. Fonts: Barlow, Barlow Condensed, IBM Plex Mono. Mark: `public/brand/red-mark.png`.
+- Navbar: Start a Project first, then Shop. No bag/cart drawer. Buy goes to Shopify.
+- Shopify is backend only (products, prices, checkout). This Next.js app owns UI. Catalog lives in `src/lib/shopify/index.ts`: Storefront GraphQL if `SHOPIFY_STOREFRONT_ACCESS_TOKEN` is set, otherwise public `products.json` + `/cart/{variantId}:{qty}` permalinks.
+- No fake testimonials, metrics, client logos, or placeholder portfolio pieces. Work stays empty until real photos exist.
+- Digital CAD files are post-purchase via Shopify, never in `public/`.
+- Do not copy GrahaPrime assets.
+- Next.js 16: read `node_modules/next/dist/docs/` before using Next APIs.
+- Windows: git/gh/vercel need full shell permissions. Do not run `git config --global`.

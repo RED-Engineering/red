@@ -2,6 +2,10 @@
 
 Official website for **RED** — engineering, product design, CAD and manufacturing.
 
+Live: [https://red-umber.vercel.app](https://red-umber.vercel.app) · GitHub: [RED-Engineering/red](https://github.com/RED-Engineering/red)
+
+Session handoff (what shipped and what’s left): [`STATUS.md`](./STATUS.md).
+
 ## Run locally
 
 ```bash
@@ -29,7 +33,7 @@ SHOPIFY_STOREFRONT_ACCESS_TOKEN
 NEXT_PUBLIC_SITE_URL
 ```
 
-Restart `npm run dev`. Shop and Buy on Shopify stay empty until those are set.
+Restart `npm run dev`. `SHOPIFY_STORE_DOMAIN` is enough to list published products and send Buy to Shopify checkout. Add `SHOPIFY_STOREFRONT_ACCESS_TOKEN` later for Storefront GraphQL (carts, metafields).
 
 Digital CAD files must be delivered after purchase through Shopify. Do not put private files in `public/`.
 
