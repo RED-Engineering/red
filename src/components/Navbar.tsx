@@ -28,7 +28,6 @@ export function Navbar() {
 
   return (
     <header
-      suppressHydrationWarning
       className={`fixed top-0 right-0 left-0 z-40 border-b transition-[background-color,border-color,box-shadow] duration-300 ${
         compact
           ? "border-paper/10 bg-ink/92 shadow-[0_10px_40px_rgba(0,0,0,0.2)] backdrop-blur-md"

@@ -20,12 +20,14 @@ const capabilities = [
 
 export function Hero() {
   const [reduce, setReduce] = useState(false);
+  const [live, setLive] = useState(false);
   const rx = useMotionValue(0);
   const ry = useMotionValue(0);
   const rotateX = useSpring(rx, { stiffness: 80, damping: 20, mass: 0.7 });
   const rotateY = useSpring(ry, { stiffness: 80, damping: 20, mass: 0.7 });
 
   useEffect(() => {
+    setLive(true);
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     const sync = () => setReduce(media.matches);
     sync();
@@ -46,15 +48,9 @@ export function Hero() {
     <section className="relative overflow-hidden border-b border-paper/10 bg-panel">
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(13,13,12,0.98)_0%,rgba(13,13,12,0.88)_42%,rgba(13,13,12,0.28)_100%),radial-gradient(circle_at_78%_44%,rgba(255,49,49,0.12),transparent_28%)]" />
       <div className="absolute top-0 right-0 h-full w-1.5 bg-red" />
-      <div className="shell relative grid min-h-[720px] items-center gap-8 py-16 lg:grid-cols-12 lg:py-20">
+      <div className="shell relative grid min-h-[720px] items-center gap-8 pt-32 pb-16 lg:grid-cols-12 lg:pt-40 lg:pb-20">
         <div className="relative z-10 lg:col-span-5">
-          <div className="flex items-center gap-3">
-            <span className="red-led" aria-hidden />
-            <p className="tech text-paper" suppressHydrationWarning>
-              RED / ENGINEERING + DESIGN + MANUFACTURING
-            </p>
-          </div>
-          <h1 className="display mt-7 max-w-[7ch]" suppressHydrationWarning>
+          <h1 className="display max-w-[7ch]">
             ENGINEERING
             <br />
             THAT FEELS
@@ -80,7 +76,11 @@ export function Hero() {
           <div className="absolute inset-[8%] rounded-[50%] bg-red/[0.06] blur-3xl" />
           <motion.div
             className="absolute inset-x-0 top-[6%] origin-center sm:inset-x-[4%] lg:top-[8%]"
-            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+            style={
+              live && !reduce
+                ? { rotateX, rotateY, transformStyle: "preserve-3d" }
+                : { transformStyle: "preserve-3d" }
+            }
           >
             <div className="animate-inspect motion-reduce:animate-none">
               <DrawingSheet
@@ -94,20 +94,14 @@ export function Hero() {
           </motion.div>
 
           <div className="pointer-events-none absolute inset-0 hidden md:block">
-            {notes.map((note, index) => (
-              <motion.div
-                key={note.n}
-                className={`absolute ${note.position} max-w-[150px]`}
-                initial={false}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: reduce ? 0 : 0.7, delay: reduce ? 0 : 0.5 + index * 0.18 }}
-              >
+            {notes.map((note) => (
+              <div key={note.n} className={`hero-note absolute ${note.position} max-w-[150px]`}>
                 <div className="mb-2 h-px w-10 bg-red/70" />
                 <p className="tech text-red">{note.n}</p>
                 <p className="mt-1 font-mono text-[9px] tracking-[0.13em] text-mist">
                   {note.label}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

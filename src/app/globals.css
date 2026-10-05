@@ -293,6 +293,33 @@ h3,
   }
 }
 
+@keyframes note-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-note {
+  animation: note-in 0.7s var(--ease-physical) both;
+}
+
+.hero-note:nth-child(1) {
+  animation-delay: 0.5s;
+}
+
+.hero-note:nth-child(2) {
+  animation-delay: 0.68s;
+}
+
+.hero-note:nth-child(3) {
+  animation-delay: 0.86s;
+}
+
 @keyframes marquee {
   from {
     transform: translate3d(0, 0, 0);
