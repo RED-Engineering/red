@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/ContactForm";
+import { EngineerContact } from "@/components/EngineerContact";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -21,24 +22,9 @@ export default function ContactPage() {
           <p className="mt-7 max-w-md text-lg leading-8 text-mist">
             Send the project details, requirements and any files you already have.
           </p>
-          <dl className="mt-12 grid grid-cols-2 gap-6 border-t border-paper/10 pt-6">
-            <div>
-              <dt className="tech">ACCEPTED</dt>
-              <dd className="mt-2 font-mono text-[10px] leading-5 tracking-[0.1em]">
-                STEP / STL / DXF
-                <br />
-                PDF / IMAGES
-              </dd>
-            </div>
-            <div>
-              <dt className="tech">RESPONSE</dt>
-              <dd className="mt-2 font-mono text-[10px] leading-5 tracking-[0.1em]">
-                PROJECT REVIEW
-                <br />
-                NEXT STEP
-              </dd>
-            </div>
-          </dl>
+          <div className="mt-10">
+            <EngineerContact />
+          </div>
         </header>
         <div className="lg:col-span-6 lg:col-start-7">
           <ContactForm />

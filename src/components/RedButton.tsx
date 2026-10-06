@@ -29,6 +29,13 @@ export function RedButton({
   );
 
   if (href) {
+    if (href.startsWith("/api/")) {
+      return (
+        <a href={href} className={className}>
+          {content}
+        </a>
+      );
+    }
     return (
       <Link href={href} className={className}>
         {content}

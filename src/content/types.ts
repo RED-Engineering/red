@@ -1,6 +1,8 @@
 export type DrawingId = "control" | "mount" | "fixture" | "hinge";
 
-export type Fulfillment = "DIGITAL" | "PHYSICAL" | "PHYSICAL + DIGITAL";
+export type ProductSource = "shopify" | "red";
+
+export type Fulfillment = "DIGITAL" | "PHYSICAL" | "PHYSICAL + DIGITAL" | "FREE";
 
 export type ProductOption = {
   label: string;
@@ -34,6 +36,7 @@ export type RedProduct = {
   weight: string;
   category: string;
   type: Fulfillment;
+  source: ProductSource;
   available: boolean;
   options: ProductOption[];
   relatedProjectSlug?: string;
@@ -41,6 +44,10 @@ export type RedProduct = {
   drawing?: DrawingId;
   image?: ShopImage;
   images: ShopImage[];
+  glb?: string;
+  downloadName?: string;
+  downloadPath?: string;
+  downloadUrl?: string;
   currencyCode: string;
   shopifyProductId?: string;
 };

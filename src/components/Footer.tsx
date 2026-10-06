@@ -24,24 +24,24 @@ export function Footer() {
             <BrandMark className="h-20 w-20" />
             <p className="h-20 font-mark text-[80px] font-bold leading-none tracking-[-0.02em] text-red">RED</p>
           </div>
-          <p className="mt-8 max-w-sm text-sm leading-6 text-mist">
-            RED — engineering, design and manufacturing.
-          </p>
           {site.email ? (
             <a
               href={`mailto:${site.email}`}
-              className="mt-5 inline-block font-display text-xl font-semibold text-paper hover:text-red"
+              className="mt-8 inline-block font-display text-xl font-semibold text-paper hover:text-red"
             >
               {site.email}
             </a>
           ) : (
             <Link
               href="/contact"
-              className="mt-5 inline-block font-display text-xl font-semibold text-paper hover:text-red"
+              className="mt-8 inline-block font-display text-xl font-semibold text-paper hover:text-red"
             >
               START A PROJECT
             </Link>
           )}
+          <p className="mt-3 max-w-sm text-sm leading-6 text-mist">
+            RED — engineering, design and manufacturing.
+          </p>
         </div>
 
         <div className="md:col-span-3">

@@ -57,10 +57,14 @@ export function Hero() {
             <br />
             HUMAN.
           </h1>
+          <p className="mt-6 max-w-md text-lg leading-8 text-mist">
+            RED designs, engineers and builds mechanical products — from a brief to a part you can
+            hold.
+          </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <RedButton href="/work">EXPLORE THE WORK</RedButton>
-            <RedButton href="/contact" variant="ghost">
-              START A PROJECT
+            <RedButton href="/contact">START A PROJECT</RedButton>
+            <RedButton href="/products" variant="ghost">
+              SHOP
             </RedButton>
           </div>
         </div>

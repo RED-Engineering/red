@@ -4,29 +4,19 @@ import { useState } from "react";
 
 const questions = [
   {
-    question: "WHAT TYPE OF PROJECTS DOES RED TAKE ON?",
+    question: "What does RED take on?",
     answer:
-      "Mechanical products, mechanisms, fixtures, sheet-metal parts, CAD assemblies, prototypes and manufacturing development.",
+      "Mechanical products, mechanisms, fixtures, sheet-metal parts, CAD assemblies, prototypes, and manufacturing development.",
   },
   {
-    question: "CAN RED WORK FROM AN EARLY IDEA?",
+    question: "How does a project start?",
     answer:
-      "Yes. A project can begin with a sketch, reference images, an existing part or a clear description of the problem.",
+      "Send the problem, quantity, deadline, and any files. RED reviews that and replies with the next practical step. A sketch or a clear description is enough to begin.",
   },
   {
-    question: "CAN I BUY THE CAD FILE OR THE PHYSICAL PRODUCT?",
+    question: "Can I buy the CAD file, the part, or both?",
     answer:
-      "Products are sold through Shopify as digital files, manufactured objects or a custom version when those options exist.",
-  },
-  {
-    question: "WHICH FILE TYPES CAN I SEND?",
-    answer:
-      "STEP, STP, STL, DXF, PDF, images and ZIP packages can be attached to the project form.",
-  },
-  {
-    question: "HOW DOES A PROJECT START?",
-    answer:
-      "Send the requirements, quantity, deadline and reference files. RED reviews the information and replies with the next practical step.",
+      "Yes. Paid files and physical parts check out through Shopify. Some files are free on this site after you enter an email. If the listed version is not what you need, send the requirement and RED will engineer that version.",
   },
 ];
 
@@ -34,19 +24,19 @@ export function Faq() {
   const [open, setOpen] = useState(0);
 
   return (
-    <div className="border-t border-black/15">
+    <div>
       {questions.map((item, index) => {
         const expanded = open === index;
         return (
-          <div key={item.question} className="border-b border-black/15">
+          <div key={item.question} className="glass-media mb-2 rounded-[8px] px-5">
             <button
               type="button"
-              className="flex w-full items-center justify-between gap-6 py-6 text-left"
+              className="flex w-full items-center justify-between gap-6 py-4 text-left"
               aria-expanded={expanded}
               onClick={() => setOpen(expanded ? -1 : index)}
             >
-              <span className="font-display text-xl font-semibold tracking-[0.03em] md:text-2xl">
-                <span className="mr-5 text-red">{String(index + 1).padStart(2, "0")}</span>
+              <span className="font-display text-lg font-semibold tracking-[0.03em] md:text-xl">
+                <span className="mr-4 text-red">{String(index + 1).padStart(2, "0")}</span>
                 {item.question}
               </span>
               <span className="font-display text-2xl text-red" aria-hidden>
@@ -59,9 +49,7 @@ export function Faq() {
               }`}
             >
               <div className="overflow-hidden">
-                <p className="max-w-2xl pb-7 pl-0 text-base leading-7 text-[#625e57] md:pl-12">
-                  {item.answer}
-                </p>
+                <p className="max-w-2xl pb-5 text-[15px] leading-7 text-mist">{item.answer}</p>
               </div>
             </div>
           </div>

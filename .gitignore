@@ -34,6 +34,11 @@ yarn-error.log*
 .env*
 !.env.example
 
+# free CAD packages (previews go in public/shop/free)
+/private/free/**
+!/private/free/
+!/private/free/README.md
+
 # vercel
 .vercel
 

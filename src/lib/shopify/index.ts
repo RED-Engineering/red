@@ -1,4 +1,5 @@
-import type { RedProduct } from "@/content/types";
+import type { Fulfillment, RedProduct } from "@/content/types";
+import { mapVariantTitle, typeFromOptions } from "@/lib/product-options";
 
 export type ShopifyCartLineInput = {
   merchandiseId: string;
@@ -80,7 +81,8 @@ type MetafieldKey =
   | "dimensions"
   | "product_type"
   | "weight"
-  | "code";
+  | "code"
+  | "glb";
 
 const PRODUCTS_QUERY = /* GraphQL */ `
   query RedProducts {
@@ -124,6 +126,18 @@ const PRODUCTS_QUERY = /* GraphQL */ `
             height
           }
         }
+        media(first: 12) {
+          nodes {
+            mediaContentType
+            ... on Model3d {
+              sources {
+                url
+                format
+                mimeType
+              }
+            }
+          }
+        }
         metafields(
           identifiers: [
             { namespace: "custom", key: "material" }
@@ -134,6 +148,7 @@ const PRODUCTS_QUERY = /* GraphQL */ `
             { namespace: "custom", key: "product_type" }
             { namespace: "custom", key: "weight" }
             { namespace: "custom", key: "code" }
+            { namespace: "custom", key: "glb" }
           ]
         ) {
           key
@@ -166,6 +181,11 @@ type ShopifyImage = {
   height: number | null;
 };
 
+type ShopifyMediaNode = {
+  mediaContentType?: string;
+  sources?: { url: string; format?: string | null; mimeType?: string | null }[];
+};
+
 type ShopifyProductNode = {
   id: string;
   handle: string;
@@ -185,6 +205,7 @@ type ShopifyProductNode = {
   };
   featuredImage: ShopifyImage | null;
   images: { nodes: ShopifyImage[] };
+  media?: { nodes: ShopifyMediaNode[] };
   metafields: ({ key: string; value: string } | null)[];
 };
 
@@ -205,14 +226,44 @@ function toImage(image: ShopifyImage | null | undefined): RedProduct["image"] {
   };
 }
 
+function productFallbackType(productType: string, metafieldType: string): Fulfillment {
+  const value = (metafieldType || productType || "").toUpperCase();
+  if (value === "DIGITAL" || value.includes("CAD") || value.includes("FILE")) return "DIGITAL";
+  if (value === "PHYSICAL + DIGITAL" || value.includes("BOTH")) return "PHYSICAL + DIGITAL";
+  return "PHYSICAL";
+}
+
+function glbFromProduct(node: ShopifyProductNode) {
+  const fromMeta = meta(node.metafields, "glb");
+  if (fromMeta) return fromMeta;
+  for (const media of node.media?.nodes ?? []) {
+    const source = media.sources?.find((item) => {
+      const format = (item.format ?? "").toLowerCase();
+      const mime = (item.mimeType ?? "").toLowerCase();
+      const url = item.url.toLowerCase();
+      return format.includes("glb") || mime.includes("gltf") || url.endsWith(".glb");
+    });
+    if (source?.url) return source.url;
+  }
+  return undefined;
+}
+
 export function mapShopifyProduct(node: ShopifyProductNode): RedProduct {
   const code = meta(node.metafields, "code") || node.handle.toUpperCase();
-  const typeValue = (meta(node.metafields, "product_type") ||
-    node.productType ||
-    "PHYSICAL") as RedProduct["type"];
+  const fallback = productFallbackType(node.productType, meta(node.metafields, "product_type"));
   const images = node.images.nodes.map(toImage).filter((image): image is NonNullable<typeof image> => Boolean(image));
   const image = toImage(node.featuredImage) ?? images[0];
   const description = node.description.trim();
+  const options = node.variants.nodes.map((v) => {
+    const mapped = mapVariantTitle(v.title, fallback);
+    return {
+      label: mapped.label,
+      price: Number.parseFloat(v.price.amount),
+      fulfillment: mapped.fulfillment,
+      available: v.availableForSale,
+      shopifyVariantId: v.id,
+    };
+  });
 
   return {
     handle: node.handle,
@@ -232,26 +283,16 @@ export function mapShopifyProduct(node: ShopifyProductNode): RedProduct {
     dimensions: meta(node.metafields, "dimensions"),
     weight: meta(node.metafields, "weight"),
     category: "OBJECT",
-    type:
-      typeValue === "DIGITAL" ||
-      typeValue === "PHYSICAL" ||
-      typeValue === "PHYSICAL + DIGITAL"
-        ? typeValue
-        : "PHYSICAL",
+    type: typeFromOptions(options),
+    source: "shopify",
     available: node.availableForSale,
     image,
     images,
+    glb: glbFromProduct(node),
     currencyCode: node.priceRange.minVariantPrice.currencyCode || "EUR",
     shopifyProductId: node.id,
     relatedProductHandles: [],
-    options: node.variants.nodes.map((v) => ({
-      label: v.title === "Default Title" ? "STANDARD" : v.title.toUpperCase(),
-      price: Number.parseFloat(v.price.amount),
-      fulfillment:
-        v.title.toLowerCase().includes("digital") ? "DIGITAL" : "PHYSICAL",
-      available: v.availableForSale,
-      shopifyVariantId: v.id,
-    })),
+    options,
   };
 }
 
@@ -313,6 +354,25 @@ async function fetchPublicShopifyProducts(): Promise<RedProduct[]> {
       )
       .filter((image): image is NonNullable<typeof image> => Boolean(image));
     const sku = product.variants.find((variant) => variant.sku)?.sku;
+    const digitalHint =
+      product.handle.toLowerCase().includes("digital") ||
+      (product.product_type ?? "").toLowerCase().includes("digital") ||
+      tags.some((tag) => ["STEP", "STL", "DXF", "CAD"].includes(tag.toUpperCase()));
+    const fallback = productFallbackType(
+      product.product_type || (digitalHint ? "DIGITAL" : ""),
+      "",
+    );
+    const options = product.variants.map((variant) => {
+      const mapped = mapVariantTitle(variant.title, fallback);
+      return {
+        label: mapped.label,
+        price: Number.parseFloat(variant.price),
+        fulfillment: mapped.fulfillment,
+        available: variant.available,
+        shopifyVariantId: `gid://shopify/ProductVariant/${variant.id}`,
+      };
+    });
+    const glb = images.find((image) => image.url.toLowerCase().includes(".glb"))?.url;
 
     return {
       handle: product.handle,
@@ -332,22 +392,16 @@ async function fetchPublicShopifyProducts(): Promise<RedProduct[]> {
       dimensions: "",
       weight: "",
       category: "OBJECT",
-      type: "PHYSICAL" as const,
+      type: typeFromOptions(options),
+      source: "shopify" as const,
       available: product.variants.some((variant) => variant.available),
       image: images[0],
       images,
+      glb,
       currencyCode,
       shopifyProductId: `gid://shopify/Product/${product.id}`,
       relatedProductHandles: [],
-      options: product.variants.map((variant) => ({
-        label: variant.title === "Default Title" ? "STANDARD" : variant.title.toUpperCase(),
-        price: Number.parseFloat(variant.price),
-        fulfillment: variant.title.toLowerCase().includes("digital")
-          ? ("DIGITAL" as const)
-          : ("PHYSICAL" as const),
-        available: variant.available,
-        shopifyVariantId: `gid://shopify/ProductVariant/${variant.id}`,
-      })),
+      options,
     };
   });
 }
