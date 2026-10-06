@@ -46,7 +46,7 @@ export function Navbar() {
             aria-label="RED — Home"
           >
             <BrandMark priority className="h-9 w-9 transition-transform group-hover:scale-105" />
-            <span className="hidden h-9 items-center font-mark text-[36px] font-bold leading-none tracking-[-0.02em] text-red sm:flex">
+            <span className="hidden h-9 items-center font-mark text-[36px] font-bold leading-none tracking-[-0.02em] text-paper sm:flex">
               RED
             </span>
           </Link>

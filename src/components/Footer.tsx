@@ -22,7 +22,7 @@ export function Footer() {
         <div className="md:col-span-5">
           <div className="flex items-center gap-5">
             <BrandMark className="h-20 w-20" />
-            <p className="h-20 font-mark text-[80px] font-bold leading-none tracking-[-0.02em] text-red">RED</p>
+            <p className="h-20 font-mark text-[80px] font-bold leading-none tracking-[-0.02em] text-paper">RED</p>
           </div>
           {site.email ? (
             <a

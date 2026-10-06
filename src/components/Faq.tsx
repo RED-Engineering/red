@@ -16,7 +16,7 @@ const questions = [
   {
     question: "Can I buy the CAD file, the part, or both?",
     answer:
-      "Yes. Paid files and physical parts check out through Shopify. Some files are free on this site after you enter an email. If the listed version is not what you need, send the requirement and RED will engineer that version.",
+      "Yes. You can buy the CAD file, the part, or both. There are several free files too.",
   },
 ];
 
