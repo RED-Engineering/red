@@ -23,17 +23,18 @@ export function ProjectCard({
   return (
     <article className={span}>
       <Link href={`/work/${project.slug}`} className="group block">
-        <div className="relative">
+        <div className="glass-media relative overflow-hidden rounded-[8px] transition-[border-color,background-color] duration-300">
           <MediaFrame
             src={project.cover}
             alt={project.title}
             tall={index % 3 !== 1}
+            className="rounded-[8px]"
           />
           <span className="absolute right-4 bottom-4 translate-y-2 rounded-[2px] bg-red px-3 py-2 font-mono text-[9px] tracking-[0.15em] text-warm-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
             VIEW PROJECT →
           </span>
         </div>
-        <div className="mt-5 flex flex-wrap items-start justify-between gap-4 border-t border-paper/10 pt-4">
+        <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="tech text-red">{project.code.replace("-", " / ")}</p>
             <h3 className="mt-2 text-3xl tracking-[-0.035em] transition-transform duration-300 group-hover:translate-x-1">

@@ -1,17 +1,25 @@
-import Link from "next/link";
 import { BrandMark } from "@/components/BrandMark";
+import { RedButton } from "@/components/RedButton";
 
 export default function NotFound() {
   return (
-    <div className="shell relative flex min-h-[70vh] flex-col justify-center overflow-hidden py-24">
-      <BrandMark className="absolute right-[5%] h-64 w-64 opacity-[0.06] md:h-96 md:w-96" />
-      <p className="tech text-red">404</p>
-      <h1 className="mt-5 max-w-4xl text-6xl tracking-[-0.055em] md:text-8xl">
-        THIS OBJECT DOES NOT EXIST.
-      </h1>
-      <Link href="/" className="tech link-line mt-10 w-fit py-2 text-red">
-        RETURN TO RED →
-      </Link>
+    <div className="shell flex min-h-[70vh] items-center py-32">
+      <div className="glass-media relative max-w-3xl overflow-hidden rounded-[8px] p-8 md:p-12">
+        <div className="pointer-events-none absolute -right-6 -bottom-10 opacity-[0.14]">
+          <BrandMark className="h-48 w-48 md:h-64 md:w-64" />
+        </div>
+        <p className="tech text-red">404</p>
+        <h1 className="section-title relative mt-4 max-w-[12ch]">This object does not exist.</h1>
+        <p className="relative mt-5 max-w-md text-lg leading-8 text-mist">
+          The page moved, or it was never drawn.
+        </p>
+        <div className="relative mt-8 flex flex-wrap gap-3">
+          <RedButton href="/">BACK HOME</RedButton>
+          <RedButton href="/products" variant="ghost">
+            SHOP
+          </RedButton>
+        </div>
+      </div>
     </div>
   );
 }

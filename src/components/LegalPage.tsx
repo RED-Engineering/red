@@ -1,13 +1,11 @@
 export function LegalPage({ title, body }: { title: string; body: string }) {
   return (
-    <div className="surface-light material-noise min-h-[65svh] py-20 md:py-28">
-      <div className="shell max-w-[900px]">
-        <p className="tech text-red">LEGAL / RED</p>
-        <h1 className="mt-5 text-6xl tracking-[-0.055em]">{title}</h1>
-        <div className="mt-10 border-t border-black/15 pt-8">
-          <p className="max-w-2xl text-lg leading-8 text-[#5d5952]">{body}</p>
-        </div>
-      </div>
+    <div className="shell py-32 md:py-40">
+      <article className="glass-media mx-auto max-w-3xl rounded-[8px] p-8 md:p-12">
+        <p className="tech text-red">LEGAL</p>
+        <h1 className="mt-4 text-5xl tracking-[-0.05em] md:text-6xl">{title}</h1>
+        <p className="mt-8 text-lg leading-8 text-mist">{body}</p>
+      </article>
     </div>
   );
 }
