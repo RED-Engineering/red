@@ -35,7 +35,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="pointer-events-none mx-auto aspect-[488/300] w-full max-w-[520px] lg:col-span-7 lg:mx-0 lg:aspect-auto lg:h-[540px] lg:max-w-none">
+        <div className="pointer-events-none mx-auto aspect-[4/5] w-full lg:col-span-7 lg:mx-0 lg:aspect-auto lg:h-[640px]">
           <HeroAssembly />
         </div>
       </div>
