@@ -2,7 +2,7 @@
 
 Official website for **RED** — engineering, product design, CAD and manufacturing.
 
-Live: [https://red-umber.vercel.app](https://red-umber.vercel.app) · GitHub: [RED-Engineering/red](https://github.com/RED-Engineering/red)
+Live: [https://redstudio.engineering](https://redstudio.engineering) · GitHub: [RED-Engineering/red](https://github.com/RED-Engineering/red)
 
 Session handoff (what shipped and what’s left): [`STATUS.md`](./STATUS.md).
 

@@ -9,8 +9,8 @@ Full handoff: `STATUS.md` at the repo root. Follow it.
 
 ## Live
 
-- Site: https://red-umber.vercel.app
-- Shop: https://red-umber.vercel.app/products (Shopify product **Suport scule Abkant**)
+- Site: https://redstudio.engineering
+- Shop: https://redstudio.engineering/products (Shopify product **Suport scule Abkant**)
 - GitHub: https://github.com/RED-Engineering/red (`master`)
 - Vercel: `red-133a/red`
 - Shopify store: `xa7k6h-dc.myshopify.com`
@@ -27,6 +27,6 @@ Custom Next.js site for **RED** (not “by David”). Shopify is catalog/checkou
 3. Add `DATABASE_URL` (Neon) on Vercel for free downloads.
 4. Wire `/api/contact` to actually email `site.email`.
 5. Real work photos in `public/work/{slug}/` + `src/content/projects.ts`.
-6. Custom domain still unset.
+6. Point redstudio.engineering DNS at Vercel (A records 216.198.79.1 and 64.29.17.1, or nameservers ns1.vercel-dns.com and ns2.vercel-dns.com). The domain is already attached to the project.
 
 Never commit `.env.local` or Shopify secrets. Never put CAD files in `public/`.

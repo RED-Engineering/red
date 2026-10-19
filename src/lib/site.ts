@@ -6,7 +6,7 @@ export const site = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   locale: "en",
   statement: "ENGINEERED TO EXIST.",
-  email: "tothdavidtz24@outlook.com",
+  email: "david@redstudio.engineering",
   phone: "+40727857763",
   contactName: "David Toth",
   contactRole: "RED Engineer",

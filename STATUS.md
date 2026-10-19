@@ -10,9 +10,9 @@ Brand is **RED**, not “RED by David”. David Toth appears only as the enginee
 
 ## Live links
 
-- Site: https://red-umber.vercel.app
-- Shop: https://red-umber.vercel.app/products
-- Start a project: https://red-umber.vercel.app/contact
+- Site: https://redstudio.engineering
+- Shop: https://redstudio.engineering/products
+- Start a project: https://redstudio.engineering/contact
 - GitHub: https://github.com/RED-Engineering/red (`master`)
 - Vercel project: `red-133a/red` (account team RED / `tothdavidtz24-3648`)
 - Shopify store: `xa7k6h-dc.myshopify.com` (Romania, RON)
@@ -51,7 +51,7 @@ Removed from the homepage: long about block, fake stats, “why RED” list, cre
 
 ### Contact
 
-- `/contact` (“Start an engineering project”): glass **EngineerContact** card with David Toth, RED Engineer, `tothdavidtz24@outlook.com`, `+40 727 857 763`, EMAIL / CALL, portrait clipped to `public/brand/portrait-mask.png`.
+- `/contact` (“Start an engineering project”): glass **EngineerContact** card with David Toth, RED Engineer, `david@redstudio.engineering`, `+40 727 857 763`, EMAIL / CALL, portrait clipped to `public/brand/portrait-mask.png`.
 - Intake form is a compact glass card (sentence-case labels). `/api/contact` still only logs — it does not send mail yet.
 - Footer: email above “RED — engineering, design and manufacturing.”
 - Contact values live in `src/lib/site.ts`.
@@ -93,11 +93,11 @@ Optional metafields (namespace `custom`): `material`, `process`, `revision`, `ye
 2. **Storefront token:** install the Shopify app, copy the Storefront access token into `.env.local` and Vercel as `SHOPIFY_STOREFRONT_ACCESS_TOKEN`. Do not use the client secret.
 3. **Shopify variants:** on each product, titles `CAD FILE` / `PHYSICAL` / `CAD + PHYSICAL` so the option picker maps correctly.
 4. **Neon `DATABASE_URL`:** required on Vercel (and locally) before live free downloads work. Run `src/lib/db/free-downloads.sql` if the table is not created automatically.
-5. **Wire `/api/contact` to email** (Resend or similar) so intake actually arrives at `tothdavidtz24@outlook.com`. The address is already in `site.email`.
+5. **Wire `/api/contact` to email** (Resend or similar) so intake actually arrives at `david@redstudio.engineering`. The address is already in `site.email`.
 6. **Real work photos:** `public/work/{slug}/` + entries in `src/content/projects.ts`. Leave the array empty until then.
 7. **Free catalog entries:** add real free products in `src/content/free-products.ts` when files exist.
 8. **Social:** `site.social` Instagram / YouTube / LinkedIn still empty.
-9. **Custom domain:** still `red-umber.vercel.app`.
+9. **Custom domain:** `redstudio.engineering` is attached on Vercel. DNS at the registrar still needs the A records `216.198.79.1` and `64.29.17.1`, or nameservers `ns1.vercel-dns.com` and `ns2.vercel-dns.com`.
 10. **Rotate** the Shopify `shpss_` secret if it was exposed in chat.
 
 ## Constraints for later sessions
@@ -121,4 +121,4 @@ NEXT_PUBLIC_SITE_URL
 DATABASE_URL                      # Neon, for free-file emails
 ```
 
-Vercel already has `SHOPIFY_STORE_DOMAIN` and `NEXT_PUBLIC_SITE_URL=https://red-umber.vercel.app`. Add `DATABASE_URL` before free downloads go live.
+Vercel already has `SHOPIFY_STORE_DOMAIN` and `NEXT_PUBLIC_SITE_URL=https://redstudio.engineering`. Add `DATABASE_URL` before free downloads go live.
