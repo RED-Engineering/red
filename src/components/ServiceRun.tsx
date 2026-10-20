@@ -32,7 +32,7 @@ function CornerMarks() {
   );
 }
 
-function Label({ x, y, children }: { x: number; y: number; children: string }) {
+function Label({ x, y, children }: { x: number | string; y: number | string; children: string }) {
   return (
     <text x={x} y={y} fill={dim} fontSize="13" fontFamily={mono} letterSpacing="1.4">
       {children}
