@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="shell py-16 md:py-24">
+    <div className="shell pt-28 pb-16 md:pt-36 md:pb-24">
       <div className="grid gap-12 lg:grid-cols-12">
         <header className="lg:col-span-5">
           <div className="flex items-center gap-3">
@@ -19,9 +19,6 @@ export default function ContactPage() {
           <h1 className="mt-6 text-6xl leading-[0.9] tracking-[-0.06em] md:text-7xl">
             START AN ENGINEERING PROJECT.
           </h1>
-          <p className="mt-7 max-w-md text-lg leading-8 text-mist">
-            Send the project details, requirements and any files you already have.
-          </p>
           <div className="mt-10">
             <EngineerContact />
           </div>
