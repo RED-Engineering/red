@@ -4,7 +4,8 @@ import { getProducts } from "@/lib/catalog";
 
 export const metadata: Metadata = {
   title: "Shop",
-  description: "CAD files, manufactured parts, and free downloads from RED.",
+  description:
+    "Buy a RED CAD file or a finished part. A new size, a new part, or a design change is a project, not a shop listing.",
 };
 
 export default async function ProductsPage() {

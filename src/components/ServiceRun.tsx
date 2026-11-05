@@ -4,12 +4,42 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 
 const services = [
-  { n: "01", title: "CAD", line: "The model, the drawing, and the dimensions to make it." },
-  { n: "02", title: "Design", line: "The form, shaped around how it is held and used." },
-  { n: "03", title: "Mechanical", line: "Fit, movement, and the parts that have to meet." },
-  { n: "04", title: "Sheet metal", line: "Flat pattern, bend lines, then the fold." },
-  { n: "05", title: "Make", line: "Laser, waterjet, bending, and fabrication." },
-  { n: "06", title: "Build", line: "A prototype to test, then the assembly." },
+  {
+    n: "01",
+    title: "CAD",
+    line: "The 3D model and the dimensioned drawing a maker can follow. Use this when the idea is clear and the missing piece is a file someone can build from.",
+    out: "The model and the drawings for the parts in scope.",
+  },
+  {
+    n: "02",
+    title: "Design",
+    line: "A sketch, a photo, or a brief turned into a form that can be held, assembled, and made. Use this when you have the need and not yet the shape.",
+    out: "A design reviewed for use and manufacturing, not only a render.",
+  },
+  {
+    n: "03",
+    title: "Mechanical",
+    line: "Parts that have to fit, move, or meet: mechanisms, mounts, and assemblies. Use this when the problem is how pieces work together.",
+    out: "The assembly model and the drawings for the parts that were agreed.",
+  },
+  {
+    n: "04",
+    title: "Sheet metal",
+    line: "Brackets, covers, panels, and formed parts that are cut and bent. The flat pattern is the sheet unfolded, with the bend lines marked, so it can be cut before folding.",
+    out: "The formed model, the flat pattern, and the bend drawing.",
+  },
+  {
+    n: "05",
+    title: "Fabrication",
+    line: "The process the part needs: sheet metal, machining, laser, waterjet, welding, printing, molding, finishing, or another process you name. RED designs for it and arranges making with partners. RED does not own the machines.",
+    out: "The physical part, only if making it was in the scope. Otherwise you receive the files.",
+  },
+  {
+    n: "06",
+    title: "Prototype",
+    line: "A physical check before more are made, then the assembly if that was agreed. Use this when the design has to be tested in the hand.",
+    out: "Something you can test, and the drawing changes that come out of the test.",
+  },
 ] as const;
 
 type ServiceId = (typeof services)[number]["n"];
@@ -277,7 +307,8 @@ export function ServiceRun() {
           <div className="lg:sticky lg:top-28">
             <h2 className="run-round max-w-[8ch] text-[2.8rem] leading-[1.02] md:text-6xl">What we do</h2>
             <p className="mt-4 max-w-xs text-[15px] leading-7 text-mist">
-              Partners cut and form where the process needs it.
+              Sheet metal is one process, not the limit. Design is RED’s work. Making the part is
+              arranged with partners when the job includes production.
             </p>
             <div className="mt-7 flex max-w-xs gap-1.5" aria-hidden>
               {services.map((step, index) => (
@@ -382,6 +413,10 @@ export function ServiceRun() {
                           {step.title}
                         </h3>
                         <p className="mt-3 text-[15px] leading-7 text-mist">{step.line}</p>
+                        <p className="mt-3 text-[15px] leading-7 text-paper">
+                          <span className="text-red">You receive. </span>
+                          {step.out}
+                        </p>
                       </div>
                       <span
                         className={`run-round shrink-0 text-5xl leading-none transition-colors duration-1000 ease-[cubic-bezier(0.45,0.05,0.2,1)] md:text-6xl ${

@@ -73,12 +73,7 @@ export function ContactForm() {
     event.preventDefault();
     if (hold) return;
     const form = event.currentTarget;
-    if (!type) {
-      setStatus("error");
-      setError("Choose a project type.");
-      return;
-    }
-
+    const chosen = type || "open";
     const materialName = material === "Other" ? materialOther.trim() : material;
     if (material === "Other" && materialName.length < 2) {
       setStatus("error");
@@ -87,10 +82,10 @@ export function ContactForm() {
     }
 
     const data = new FormData(form);
-    data.set("type", type);
+    data.set("type", chosen);
     data.set("material", [materialName, grade].filter(Boolean).join(", "));
     data.delete("material_other");
-    if (type !== "other") data.delete("detail");
+    if (chosen !== "other") data.delete("detail");
     data.delete("files");
     for (const file of files) data.append("files", file);
 
@@ -175,6 +170,7 @@ export function ContactForm() {
               </Block>
 
               <Block index="02" label="Project">
+                <p className="mb-3 text-[15px] leading-6 text-mist">Optional. Leave it if you are not sure.</p>
                 <div className="flex flex-wrap gap-1.5" role="radiogroup" aria-label="Project type">
                   {projectTypes.map((item) => {
                     const selected = type === item.id;
@@ -271,7 +267,7 @@ export function ContactForm() {
                     <input
                       value={grade}
                       onChange={(event) => setGrade(event.target.value)}
-                      placeholder="S355"
+                      placeholder="If known"
                       className={fieldClass}
                     />
                   </Field>
@@ -289,7 +285,7 @@ export function ContactForm() {
                   <textarea
                     name="description"
                     required
-                    minLength={12}
+                    minLength={4}
                     rows={6}
                     className="intake-pad min-h-48 w-full resize-y rounded-[2px] border border-paper/22 outline-none focus:border-red"
                   />
@@ -301,7 +297,7 @@ export function ContactForm() {
                   <span>
                     <span className="tech text-paper">Add files</span>
                     <span className="mt-1 block font-mono text-[10px] tracking-[0.08em] text-mute">
-                      STEP · STL · DXF · PDF · PNG · ZIP · 4 MB
+                      OPTIONAL · STEP · STL · DXF · PDF · PNG · ZIP · 4 MB
                     </span>
                   </span>
                   <span aria-hidden className="font-mono text-lg text-red">

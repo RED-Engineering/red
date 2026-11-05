@@ -7,12 +7,12 @@ import { motion, useReducedMotion } from "motion/react";
 import { BrandMark } from "@/components/BrandMark";
 
 const nav = [
-  { href: "/work", label: "WORK", note: "Finished objects" },
-  { href: "/products", label: "SHOP", note: "Files and parts" },
-  { href: "/engineering", label: "SERVICES", note: "What we make" },
-  { href: "/about", label: "ABOUT", note: "The studio" },
-  { href: "/#process", label: "PROCESS", note: "How a job runs" },
-  { href: "/contact", label: "CONTACT", note: "Talk to us" },
+  { href: "/work", label: "WORK", note: "Photographed jobs" },
+  { href: "/products", label: "SHOP", note: "Buy a file or a part" },
+  { href: "/engineering", label: "SERVICES", note: "Any manufacturing process" },
+  { href: "/about", label: "ABOUT", note: "Who RED is" },
+  { href: "/#process", label: "PROCESS", note: "From a brief to delivery" },
+  { href: "/contact", label: "CONTACT", note: "Tell us what you need" },
 ] as const;
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -267,7 +267,7 @@ export function Navbar() {
               <span aria-hidden>→</span>
             </Link>
             <p className="mt-6 text-center font-display text-sm font-bold tracking-[0.18em] text-mist">
-              DRAW IT · MAKE IT · HOLD IT
+              ANY PROCESS · MECHANICAL · PRODUCTION FILES
             </p>
           </nav>
         </div>

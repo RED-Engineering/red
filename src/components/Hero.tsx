@@ -2,10 +2,10 @@ import { HeroAssembly } from "@/components/HeroAssembly";
 import { RedButton } from "@/components/RedButton";
 
 const capabilities = [
-  ["01", "PRODUCT DESIGN"],
-  ["02", "MECHANICAL CAD"],
-  ["03", "PROTOTYPING"],
-  ["04", "MANUFACTURING"],
+  ["01", "SHEET METAL"],
+  ["02", "MACHINING"],
+  ["03", "WELDING"],
+  ["04", "ANY PROCESS"],
 ] as const;
 
 export function Hero() {
@@ -16,21 +16,30 @@ export function Hero() {
 
       <div className="shell relative z-10 grid items-center gap-1 pt-28 pb-6 lg:min-h-[740px] lg:grid-cols-12 lg:gap-6 lg:pt-36 lg:pb-16">
         <div className="max-w-xl lg:col-span-5">
-          <h1 className="display max-w-[7ch]">
+          <p className="tech mb-5 text-red">ANY MANUFACTURING PROCESS</p>
+          <h1 className="display max-w-[11ch]">
             ENGINEERING
             <br />
-            THAT FEELS
+            THAT
+            <br />
+            FEELS
             <br />
             HUMAN.
           </h1>
           <p className="mt-5 max-w-md text-lg leading-8 text-mist lg:mt-6">
-            RED designs, engineers and builds mechanical products — from a brief to a part you can
-            hold.
+            RED designs mechanical parts and assemblies, then prepares them for the process that
+            makes them — sheet metal, machining, laser, welding, printing, molding, or another
+            process the part needs.
+          </p>
+          <p className="mt-3 max-w-md text-[15px] leading-7 text-mist/80">
+            For a company that needs a part designed, an existing design made manufacturable, or
+            extra engineering capacity. A sketch is enough to start. Making the part is arranged
+            with partners when the job includes production.
           </p>
           <div className="mt-6 flex flex-wrap gap-3 lg:mt-8">
-            <RedButton href="/contact">START A PROJECT</RedButton>
-            <RedButton href="/products" variant="ghost">
-              SHOP
+            <RedButton href="/contact">TELL US WHAT YOU NEED</RedButton>
+            <RedButton href="/engineering" variant="ghost">
+              SEE THE SERVICES
             </RedButton>
           </div>
         </div>

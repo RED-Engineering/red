@@ -1,10 +1,12 @@
-const beat = ["DRAW IT", "MAKE IT", "HOLD IT"];
+const beat = ["SHEET METAL", "MACHINING", "LASER", "WELDING", "PRINTING", "MOLDING", "ASSEMBLY"];
 const lines = Array.from({ length: 12 }, (_, index) => beat[index % beat.length]);
 
 export function EngineeringMarquee() {
   return (
     <div className="group overflow-hidden border-y border-ink bg-red text-ink">
-      <p className="sr-only">Draw it. Make it. Hold it.</p>
+      <p className="sr-only">
+        Sheet metal, machining, laser, welding, printing, molding, and assembly.
+      </p>
       <div
         className="overflow-hidden py-4 [mask-image:linear-gradient(90deg,transparent,#000_40px,#000_calc(100%-40px),transparent)]"
         aria-hidden

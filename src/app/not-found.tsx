@@ -9,14 +9,15 @@ export default function NotFound() {
           <BrandMark className="h-48 w-48 md:h-64 md:w-64" />
         </div>
         <p className="tech text-red">404</p>
-        <h1 className="section-title relative mt-4 max-w-[12ch]">This object does not exist.</h1>
+        <h1 className="section-title relative mt-4 max-w-[12ch]">That page is not here.</h1>
         <p className="relative mt-5 max-w-md text-lg leading-8 text-mist">
-          The page moved, or it was never drawn.
+          RED designs mechanical parts for the manufacturing process they need. Start from the
+          homepage, or send the part you need.
         </p>
         <div className="relative mt-8 flex flex-wrap gap-3">
           <RedButton href="/">BACK HOME</RedButton>
-          <RedButton href="/products" variant="ghost">
-            SHOP
+          <RedButton href="/contact" variant="ghost">
+            TELL US WHAT YOU NEED
           </RedButton>
         </div>
       </div>

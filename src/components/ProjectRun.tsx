@@ -4,12 +4,42 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 
 const steps = [
-  { n: "01", title: "Idea", line: "You send the need. We mark what gets drawn, tested and made." },
-  { n: "02", title: "Design", line: "The form, drawn so the part can actually be made." },
-  { n: "03", title: "Engineer", line: "Fit, movement, materials and the sheet metal." },
-  { n: "04", title: "Prototype", line: "Built and tested, then changed before production." },
-  { n: "05", title: "Manufacture", line: "Cut, bent, finished and assembled." },
-  { n: "06", title: "Deliver", line: "The part, and how it was made." },
+  {
+    n: "01",
+    title: "Tell us",
+    line: "Send a sketch, a CAD file, a photo, a drawing, or a plain description. An idea is enough. You do not need a finished specification.",
+    out: "A reply that says what RED can take on, and what is still missing.",
+  },
+  {
+    n: "02",
+    title: "Define",
+    line: "RED reviews fit, material, quantity, and how the part has to be made, then agrees the scope before drawing starts.",
+    out: "A defined job. Cost and timing are agreed per project. There is no fixed package.",
+  },
+  {
+    n: "03",
+    title: "Design",
+    line: "The part or assembly is modeled and checked against how it has to fit, move, and be manufactured.",
+    out: "A design you can review before it is documented for production.",
+  },
+  {
+    n: "04",
+    title: "Document",
+    line: "CAD is the 3D file. A flat pattern is the sheet unfolded, with the bend lines, so it can be cut before it is folded. A BOM is the parts list.",
+    out: "Whichever of those the scope includes: models, flat patterns, drawings, a parts list.",
+  },
+  {
+    n: "05",
+    title: "Make",
+    line: "Only when making the part is in the scope. The process follows the part: sheet metal, machining, laser, waterjet, welding, printing, molding, or another process you name. RED arranges that with partners and does not own every machine.",
+    out: "A prototype or a part, if that was agreed. Otherwise this step does not happen.",
+  },
+  {
+    n: "06",
+    title: "Deliver",
+    line: "You receive the files, the part, or both — the deliverable named in the scope.",
+    out: "What was agreed. Nothing implied beyond that.",
+  },
 ] as const;
 
 const ease = [0.45, 0.05, 0.2, 1] as const;
@@ -65,6 +95,10 @@ export function ProjectRun() {
             <h2 className="run-round max-w-[9ch] text-[2.8rem] leading-[1.02] md:text-6xl">
               How a project runs
             </h2>
+            <p className="mt-4 max-w-xs text-[15px] leading-7 text-mist">
+              From the first note to the files or the part. Every stage is only included if the
+              scope says so.
+            </p>
             <div className="mt-7 flex max-w-xs gap-1.5" aria-hidden>
               {steps.map((step, index) => (
                 <span
@@ -172,6 +206,10 @@ export function ProjectRun() {
                           {step.title}
                         </h3>
                         <p className="mt-3 text-[15px] leading-7 text-mist">{step.line}</p>
+                        <p className="mt-3 text-[15px] leading-7 text-paper">
+                          <span className="text-red">You get. </span>
+                          {step.out}
+                        </p>
                       </div>
                       <span
                         className={`run-round shrink-0 text-5xl leading-none transition-colors duration-1000 ease-[cubic-bezier(0.45,0.05,0.2,1)] md:text-6xl ${

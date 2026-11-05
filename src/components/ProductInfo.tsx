@@ -178,7 +178,7 @@ export function ProductInfo({ product }: { product: RedProduct }) {
               </form>
             )
           ) : isQuote ? (
-            <RedButton href="/contact">REQUEST ENGINEERING</RedButton>
+            <RedButton href="/contact">TELL US WHAT YOU NEED</RedButton>
           ) : (
             <>
               <RedButton

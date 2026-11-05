@@ -31,6 +31,10 @@ export function ShopCatalog({ products }: { products: RedProduct[] }) {
     <>
       <div className="text-center">
         <h1 className="display">SHOP</h1>
+        <p className="mx-auto mt-6 max-w-lg text-lg leading-8 text-mist">
+          Files and finished parts you can buy now. Custom engineering — a new size, a new part, or
+          a change — starts on the project form, not here.
+        </p>
         <label className="mx-auto mt-10 block max-w-md">
           <span className="sr-only">Search products</span>
           <input

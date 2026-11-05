@@ -4,19 +4,39 @@ import { useState } from "react";
 
 const questions = [
   {
-    question: "What does RED take on?",
+    question: "I need a custom metal enclosure. Can RED do that?",
     answer:
-      "Mechanical products, mechanisms, fixtures, sheet-metal parts, CAD assemblies, prototypes, and manufacturing development.",
+      "Yes. RED designs the enclosure — fit, openings, and how it is made from sheet — and prepares the CAD and drawings. If making the enclosure is part of the agreed scope, fabrication is arranged with partners. RED does not own the factory.",
   },
   {
-    question: "How does a project start?",
+    question: "Can you prepare sheet-metal parts and the drawings to make them?",
     answer:
-      "Send the problem, quantity, deadline, and any files. RED reviews that and replies with the next practical step. A sketch or a clear description is enough to begin.",
+      "Yes. That includes the 3D model, the flat pattern (the sheet unfolded, with bend lines), and the dimensioned drawing. A BOM, the parts list, is included when the scope asks for it.",
   },
   {
-    question: "Can I buy the CAD file, the part, or both?",
+    question: "We need extra CAD capacity, not a whole product. Is that possible?",
     answer:
-      "Yes. You can buy the CAD file, the part, or both. There are several free files too.",
+      "Yes. RED can take one defined task or stay on as extra engineering capacity for a team that already has projects. The tasks and the deliverables are agreed first.",
+  },
+  {
+    question: "I only have an idea. No CAD, no drawings.",
+    answer:
+      "That is enough to start. Describe the problem, or send a sketch or a photo. RED will say what is needed next. You do not need a finished specification.",
+  },
+  {
+    question: "Is RED only sheet metal?",
+    answer:
+      "No. Sheet metal is one process. RED also engineers parts for machining, laser and waterjet cutting, welding, 3D printing, molding, casting, finishing, and assembly. If the part needs a different process, name it.",
+  },
+  {
+    question: "Does RED manufacture everything itself?",
+    answer:
+      "No. Design, CAD, and engineering are RED’s work. When production is in the scope, the process is arranged with partners who run that process. RED does not own every machine, and not every job includes making the part.",
+  },
+  {
+    question: "Can I buy a file or a finished part without starting a project?",
+    answer:
+      "Yes. The shop is separate. You can buy a CAD file, a physical part, or both, and check out through Shopify.",
   },
 ];
 

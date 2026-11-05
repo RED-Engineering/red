@@ -1,4 +1,5 @@
 export const projectTypes = [
+  { id: "open", label: "Not sure yet" },
   { id: "part", label: "Part" },
   { id: "product", label: "Product" },
   { id: "fixture", label: "Fixture" },
@@ -73,7 +74,7 @@ export function readIntake(
   if (!emailPattern.test(email)) return { ok: false, error: "Add a valid email." };
   if (!typeIds.has(type)) return { ok: false, error: "Choose a project type." };
   if (type === "other" && detail.length < 2) return { ok: false, error: "Say what the other project is." };
-  if (description.length < 12) return { ok: false, error: "Describe the job." };
+  if (description.length < 4) return { ok: false, error: "Add a short description." };
 
   const files = form
     .getAll("files")
